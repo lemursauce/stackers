@@ -1,6 +1,7 @@
 from sense_hat import SenseHat
 from pygame.locals import *
 import pygame
+import time
 import random
 
 sense = SenseHat()
@@ -14,17 +15,17 @@ class stack():
 	
 	def startGame(self):
 		pygame.time.set_timer(USEREVENT +1, 800)
+		x = 0
 		while self.gaming:
-			for event in pygame.event.get():
-				if event.type == KEYDOWN:
-					r = random.randint(0,255)
-					g = random.randint(0,255)
-					b = random.randint(0,255)
-					x = random.randint(0,7)
-					y = random.randint(0,7)
-					sense.set_pixel(x,y, (r,g,b) )
-				elif event.type == KEYUP:
-					sense.clear()
+			for i in range(0,8):
+				r = random.randint(0,255)
+				g = random.randint(0,255)
+				b = random.randint(0,255)
+
+				sense.set_pixel((x+i-1)%8,i, (0,0,0))
+				sense.set_pixel((x+i)%8,i, (r,g,b))
+			time.sleep(.01)
+			x = (x+1)%8
 
 if __name__ == "__main__":
 	try:
