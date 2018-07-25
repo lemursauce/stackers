@@ -16,16 +16,22 @@ class stack():
 	def startGame(self):
 		pygame.time.set_timer(USEREVENT +1, 800)
 		x = 0
+		v = 1
 		while self.gaming:
-			for i in range(0,8):
-				r = random.randint(0,255)
-				g = random.randint(0,255)
-				b = random.randint(0,255)
 
-				sense.set_pixel((x+i-1)%8,i, (0,0,0))
-				sense.set_pixel((x+i)%8,i, (r,g,b))
-			time.sleep(.01)
-			x = (x+1)%8
+			if not v == 0:
+				sense.set_pixel((x-v)%8,7, (0,0,0) )
+				sense.set_pixel(x,7, (0,0,255) )
+				time.sleep(.05)
+				sense.set_pixel(x,7, (0,0,0) )
+				time.sleep(.05)
+				x = (x+v)%8
+			else:
+				sense.set_pixel(x,7, (0,0,255) )
+
+			for event in pygame.event.get():
+				if event.type == KEYDOWN:
+					v = 0
 
 if __name__ == "__main__":
 	try:
